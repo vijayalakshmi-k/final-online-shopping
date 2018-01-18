@@ -14,6 +14,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
 	<h2>ProductAdminList</h2>
 
 	<table class="table table-hover" id="apl" class="display" border="2" width="80" align="center"></table>
@@ -49,15 +50,19 @@
 		<td class="span3"><c:out value="${p.description }"></c:out></td>
 		<td><c:out value="${p.Stock }"></c:out></td>
 		<td><c:out value="${p.price }"></c:out></td>
-		<td><img src="${pageContext.request.contextPath}/resources/${p.imgname}" height="50px" width="50px"></td>
-		<td class="span2">
-		<c:set var="contextRoot" value="${pageContext.request.contextPath}"></c:set></td></tr>
-      </c:forEach>
+		<td><img src="${pagecontent.request.contextpath}/resources/${p.imgName}" height="50px" width="50px"></td>
+	 <td class="span2">
+		<c:set var="contextRoot" value="${pageContext.request.contextPath}"></c:set>
+		<a class="btn btn-danger" role="button" href="<c:url value="/prodDetails/${p.pid}"/>">Details</a></td>
+     </tr>
+    
+     </c:forEach>
+</table>
+</div>
+</body>
+</html>
 
-
-
-
-
+ 
 
 
 

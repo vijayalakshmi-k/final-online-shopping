@@ -27,22 +27,24 @@
 	<th>Price</th>
 	<th class="span2">Action</th>
 	</tr>
-	
-	
-	<c:forEach var="p" varstatus="st" items="${prodAdminlist }">
+	<c:if test="$ empty prodlist}">
+	<tr>
+	<td colspan="10" align="center">this list is empty</td></tr>
+	</c:if>
+	<c:forEach var="p" varstatus="st" items="${prodList }">
 	<tr>
 		<td><c:out value="${st.count }"></c:out></td>
 		<td><c:out value="${p.pid }"></c:out></td>
 		<td><c:out value="${p.pname }"></c:out></td>
 		<td><c:out value="${p.supplier.SupplierName }"></c:out></td>
-		<td><c:out value="${p.category.CategoryName }"></c:out></td>
+		<td><c:out value="${p.category.CategoryName }"></c:out></td> 
 		<td class="span3"><c:out value="${p.description }"></c:out></td>
 	    <td><c:out value="${p.price }"></c:out></td>
 		<td><c:out value="${p.Stock }"></c:out></td>
 		<td> <img src="${pagecontext.request.contextpath}/resources/${p.imgname}" height="50px" width="50px"></td>
 		<td>< class="span4">   
 		<c:set var="contextRoot" value="${pageContext.request.contextPath}"></c:set>
-		<a  class="btn btn-info"    role="button"    href="${contextroot}/updateprod?pid=<c:out value=/${p.pid}">Edit</c:out></a>
+		<a  class="btn btn-info"    role="button"  href="${contextroot}/updateprod?pid=<c:out value=/${p.pid}">Edit</a>
 		<a  class="btn btn-danger" role="button"  href="${contextroot}/deleteprod?pid=<c:out value=/${p.pid}">Delete</a>
 				</td></tr></c:forEach></table>
 				</div>
