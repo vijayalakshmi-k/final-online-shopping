@@ -26,6 +26,11 @@ import com.DaoImpl.OrdersDaoImpl;
 import com.DaoImpl.ProductDaoImpl;
 import com.DaoImpl.SupplierDaoImpl;
 import com.DaoImpl.UserDaoImpl;
+import com.Daoimpl.CategoryDaoimpl;
+import com.Daoimpl.OrdersDaoimpl;
+import com.Daoimpl.ProductDaoimpl;
+import com.Daoimpl.SupplierDaoimpl;
+import com.Daoimpl.UserDaoimpl;
 import com.model.Cart;
 import com.model.Category;
 import com.model.Orders;
@@ -33,7 +38,7 @@ import com.model.Product;
 import com.model.User;
 
 @Controller
-public class CartController {
+public class cartcontroller {
 	
 	@Autowired
 	SupplierDaoimpl supplierDaoimpl; 
@@ -44,7 +49,7 @@ public class CartController {
 	ProductDaoimpl productDaoimpl; 
 	
 	@Autowired
-	CartDaoimpl cartDaoimpl; 
+	CartDaoImpl cartDaoimpl; 
 	
 	@Autowired
 	OrdersDaoimpl ordersDaoimpl; 
@@ -56,7 +61,7 @@ public class CartController {
 	public ModelAndView proddet(@PathVariable("pid")int pid)
 	{
 		ModelAndView mv=new ModelAndView();
-		Product prod=productDaoimpl.findByPID(pid);
+		Product prod=productDaoimpl.FindByProductId(pid);
 		mv.addObject("prod",prod);
 		mv.setViewName("proddetails");
 		return mv;
@@ -78,24 +83,24 @@ public class CartController {
 			Cart cartExist=cartDaoimpl.getCartById(pid, userEmail);
 		if(cartExist == null) {
 			Cart cm=new Cart();
-			cm.setCartPrice(price);
-	cm.setCartProductID(pid);
-	cm.setCartStock(cartExist.getCartStock()+qty);
-	cm.setCartImage(imgName);
+			cm.setCartprice(price);
+	cm.setCartid(pid);
+	cm.setCartstock(cartExist.getCartstock()+qty);
+	cm.setCartimage(imgName);
 	cm.setCartProductName(pname);
-	User u=userDaoimpl.findUserByEmail(userEmail);
+	User u=userDaoimpl.FindByEmail(userEmail);
 	cm.setCartUserDetails(u);
 	cartDaoimpl.insertCart(cm);
 		}	
 		else if(cartExist!=null)
 		{
 			Cart cm=new Cart();
-			cm.setCartPrice(price);
-	cm.setCartProductID(pid);
-	cm.setCartStock(qty);
-	cm.setCartImage(imgName);
+			cm.setCartprice(price);
+	cm.setCartid(pid);
+	cm.setCartstock(qty);
+	cm.setCartimage(imgName);
 	cm.setCartProductName(pname);
-	User u=userDaoimpl.findUserByEmail(userEmail);
+	User u=userDaoimpl.FindByEmail(userEmail);
 	cm.setCartUserDetails(u);
 	cartDaoimpl.insertCart(cm);
 		}
@@ -119,7 +124,7 @@ public class CartController {
 		ModelAndView mv=new ModelAndView(); 
 		Principal principal=request.getUserPrincipal();
 		String userEmail=principal.getName();
-		User u=userDaoimpl.findUserByEmail(userEmail);
+		User u=userDaoimpl.FindByEmail(userEmail);
 		List<Cart> cart=cartDaoimpl.findByCartID(userEmail);
 		mv.addObject("user",u);
 		mv.addObject("cart",cart);
@@ -139,12 +144,12 @@ public class CartController {
 		
 		Double total=Double.parseDouble(request.getParameter("total"));
 		String payment=request.getParameter("payment");
-		User u=userDaoimpl.findUserByEmail(userEmail);
+		User u=userDaoimpl.FindByEmail(userEmail);
 		ord.setUser(u);
 		ord.setTotal(total);
 		ord.setPayment(payment);
-		ordersDaoimpl.insertOrder(ord);
-		mv.addObject("user",userDaoimpl.findUserByEmail(userEmail));
+		ordersDaoimpl.insertorder(ord);
+		mv.addObject("user",userDaoimpl.FindByEmail(userEmail));
 		mv.addObject("orderDetails",u);
 		mv.addObject("Cart",cart);
 		return mv;

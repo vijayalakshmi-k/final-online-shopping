@@ -3,9 +3,10 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Daoimpl.CategoryDaoImpl;
+import com.Daoimpl.CategoryDaoimpl;
 import com.Daoimpl.ProductDaoImpl;
+import com.Daoimpl.ProductDaoimpl;
 import com.Daoimpl.SupplierDaoImpl;
+import com.Daoimpl.SupplierDaoimpl;
 import com.Daoimpl.UserDaoImpl;
 import com.model.Category;
 import com.model.Product;
@@ -25,10 +29,9 @@ import com.model.Supplier;
 import com.model.User;
 
 @Controller
-public class adminController {
-
-	
-
+public class admincontroller 
+{
+   
 	@RequestMapping("/admin")
 	public String admin()
 	{
@@ -46,13 +49,13 @@ public class adminController {
 	ProductDaoimpl productDaoImpl; 
 	
 	@RequestMapping(value="/saveSupp",method=RequestMethod.POST)
-	@Transactional
+	//@Transactional
 	public ModelAndView saveSuppData(@RequestParam("sid")int sid,@RequestParam("sname")String sname)
 	{
 ModelAndView mv=new ModelAndView();
 		Supplier ss=new Supplier();
 	 ss.setSid(sid);
-		 ss.setSupplierName(sname);
+		 ss.setSname(sname);
 		supplierDaoImpl.insertSupplier(ss);
 		mv.setViewName("adding");
 		return mv;
@@ -82,15 +85,15 @@ ModelAndView mv=new ModelAndView();
 		Product prod=new Product();
 		prod.setPname(request.getParameter("pName"));
 		prod.setPrice(Double.parseDouble(request.getParameter("pPrice")));
-		prod.setDescription(request.getParameter("pDescription"));
+		prod.setPdescription(request.getParameter("pDescription"));
 		prod.setStock(Integer.parseInt(request.getParameter("pStock")));
-		prod.setCategory(categoryDaoImpl.findByCatId(Integer.parseInt(request.getParameter("pCategory"))));
-				prod.setSupplier(supplierDaoImpl.findBySuppId(Integer.parseInt(request.getParameter("pSupplier"))));
+		prod.setCategory(categoryDaoImpl.FindBycategoryId(Integer.parseInt(request.getParameter("pCategory"))));
+		prod.setSupplier(supplierDaoImpl.findBySuppId(Integer.parseInt(request.getParameter("pSupplier"))));
 				
 				
 		String filepath=request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
-		prod.setImgName(filename);
+		prod.setImgname(filename);
 		productDaoImpl.insertProduct(prod);
 		System.out.println("File path"+ filepath);
 		 try {
@@ -108,9 +111,9 @@ ModelAndView mv=new ModelAndView();
 	@ModelAttribute
 	public void loadingDataImage(Model m)
 	{
-		m.addAttribute("satList",supplierDaoimpl.retrieve());
-		m.addAttribute("catList",categoryDaoimpl.retrieve());
-		m.addAttribute("prodList",productDaoimpl.retrieve());
+		m.addAttribute("satList",SupplierDaoimpl.retrieve());
+		m.addAttribute("catList",CategoryDaoimpl.retrieve());
+		m.addAttribute("prodList",ProductDaoimpl.retrieve());
 		
 	}
 	
@@ -118,7 +121,7 @@ ModelAndView mv=new ModelAndView();
 	public ModelAndView  prodList()
 	{
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("prodList",productDaoimpl.retrieve());
+		mv.addObject("prodList",productDaoImpl.retrieve());
 		mv.setViewName("Productadminlist");
 		return mv;
 	}
@@ -128,7 +131,7 @@ ModelAndView mv=new ModelAndView();
 	public ModelAndView  satList()
 	{
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("satList",supplierDaoimpl.retrieve());
+		mv.addObject("satList",supplierDaoImpl.retrieve());
 		mv.setViewName("suppAdmin");
 		return mv;
 	}
@@ -137,7 +140,7 @@ ModelAndView mv=new ModelAndView();
 	public ModelAndView  catList()
 	{
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("catList",categoryDaoimpl.retrieve());
+		mv.addObject("catList",categoryDaoImpl.retrieve());
 		mv.setViewName("categoryAdminList");
 		return mv;
 	}
@@ -145,7 +148,7 @@ ModelAndView mv=new ModelAndView();
 	@RequestMapping(value = "/deleteProd/{pid}")
 	public String deleteProduct( @PathVariable("pid")int pid)
 	{
-		 productDaoImpl.deleteProd(pid);
+		 productDaoImpl.deleteProduct(pid);
 		 return "redirect:/productList?del";
 
 	}
@@ -155,10 +158,10 @@ ModelAndView mv=new ModelAndView();
 	public ModelAndView  updateproduct(@RequestParam("pid")int pid)
 	{
 		ModelAndView mv=new ModelAndView();
-		Product p=productDaoimpl.findByPID(pid);
+		Product p=productDaoImpl.FindByProductId(pid);
 		mv.addObject("prod",p);
-		mv.addObject("cList",categoryDaoimpl.retrieve());
-		mv.addObject("sList",supplierDaoimpl.retrieve());
+		mv.addObject("cList",categoryDaoImpl.retrieve());
+		mv.addObject("sList",supplierDaoImpl.retrieve());
 		mv.setViewName("updateProduct");
 		return mv;
 	}
@@ -171,18 +174,18 @@ ModelAndView mv=new ModelAndView();
 		prod.setPid(Integer.parseInt(pid));
 		prod.setPname(request.getParameter("pName"));
 		prod.setPrice(Double.parseDouble(request.getParameter("pPrice")));
-		prod.setDescription(request.getParameter("pDescription"));
+		prod.setPdescription(request.getParameter("pDescription"));
 		prod.setStock(Integer.parseInt(request.getParameter("pStock")));
 		String cat=request.getParameter("pCategory");
 		String sat=request.getParameter("pSupplier");
-		prod.setCategory(categoryDaoimpl.findByCatId(Integer.parseInt(cat)));
-	   prod.setSupplier(supplierDaoimpl.findBySuppId(Integer.parseInt(sat)));
+		prod.setCategory(categoryDaoImpl.FindBycategoryId(Integer.parseInt(cat)));
+	   prod.setSupplier(supplierDaoImpl.findBySuppId(Integer.parseInt(sat)));
 				
 				
 		String filepath=request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
-		prod.setImgName(filename);
-		productDaoimpl.update(prod);
+		prod.setImgname(filename);
+		productDaoImpl.update(prod);
 		System.out.println("File path"+ filepath);
 		 try {
 			 byte imagebyte[] = file.getBytes();

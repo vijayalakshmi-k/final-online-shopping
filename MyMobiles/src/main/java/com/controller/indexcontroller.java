@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.Daoimpl.CategoryDaoImpl;
-import com.Daoimpl.ProductDaoImpl;
-import com.Daoimpl.UserDaoImpl;
+import com.Daoimpl.CategoryDaoimpl;
+import com.Daoimpl.ProductDaoimpl;
+import com.Daoimpl.UserDaoimpl;
 import com.model.User;
 
 @Controller
@@ -47,7 +47,7 @@ if(result.hasErrors()) {
 	return mav;
 }	else {	
 		user.setRole("ROLE_USER");
-		userDaoimpl.insertUser(user);
+		userDaoImpl.insertUser(user);
 		mav.setViewName("index");
 		return mav;}
 	}
@@ -56,7 +56,7 @@ if(result.hasErrors()) {
 	public ModelAndView getCustTable(@RequestParam("cid")int cid)
 	{
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("prodList",productDaoimpl.retrieve());
+		mv.addObject("prodList",productDaoImpl.retrieve());
 		mv.setViewName("ProdCustList");
 		return mv;
 	}
