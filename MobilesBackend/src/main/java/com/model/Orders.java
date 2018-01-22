@@ -66,6 +66,20 @@ private double amount;
 private double price;
 private String productCode;
 	// TODO Auto-generated method stub
+public void setUser(User u) 
+{
+	// TODO Auto-generated method stub
+
+}
+public void setTotal(Double total) {
+	// TODO Auto-generated method stub
+	
+}
+public void setPayment(String payment) 
+{
+	// TODO Auto-generated method stub
+	
+}
 	
 }
 

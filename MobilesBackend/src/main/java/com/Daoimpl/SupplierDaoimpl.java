@@ -29,7 +29,8 @@ public void setSessionFactory(SessionFactory sessionFactory) {
 	this.sessionFactory = sessionFactory;
 }
 
-public void insertSupplier(com.model.Supplier supplier) {
+public void insertSupplier(com.model.Supplier supplier) 
+{
 
 
 	
@@ -38,10 +39,24 @@ public void insertSupplier(com.model.Supplier supplier) {
 	 session.saveOrUpdate(supplier);
 	 session.getTransaction().commit();
 }
-public static Object retrieve() {
+//public static Object retrieve() {
 	// TODO Auto-generated method stub
-	return null;
-}
+	//return null;
+//}
+
+@SuppressWarnings("rawtypes")
+public  List<Supplier> retrieve()
+{
+	Session session=sessionFactory.openSession();
+	session.beginTransaction();
+	@SuppressWarnings({ "unchecked" })
+	List <Supplier>li=session.createQuery("from Supplier").list();
+    session.getTransaction().commit();
+    return li;
+
+	}
+
+@SuppressWarnings("rawtypes")
 public Supplier findBySuppId(int sid) 
 {
 	Session session=sessionFactory.openSession();
@@ -60,9 +75,6 @@ public Supplier findBySuppId(int sid)
 	return s;
 	
 }
-
-
-
 
 
 

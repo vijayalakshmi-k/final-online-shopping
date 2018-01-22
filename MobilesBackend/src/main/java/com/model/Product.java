@@ -1,6 +1,5 @@
 package com.model;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Locale.Category;
 import java.util.function.Supplier;
@@ -34,6 +33,7 @@ private Category category;
 
 	
 
+@SuppressWarnings("rawtypes")
 @ManyToOne(fetch=FetchType.EAGER)
 @JoinColumn(name="sid")
 private Supplier supplier;
@@ -80,6 +80,7 @@ public Category getCategory() {
 public void setCategory(Category category) {
 	this.category = category;
 }
+@SuppressWarnings("rawtypes")
 public Supplier getSupplier() {
 	return supplier;
 }

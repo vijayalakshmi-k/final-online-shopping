@@ -2,9 +2,7 @@ package com.config;
 import java.util.Locale.Category;
 import java.util.Properties;
 import java.util.function.Supplier;
-
 import javax.sql.DataSource;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +12,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import com.Daoimpl.CartDaoImpl;
 import com.Daoimpl.CategoryDaoimpl;
 import com.Daoimpl.OrdersDaoimpl;
@@ -77,6 +74,7 @@ public UserDaoimpl SaveUserData(SessionFactory sf)
 {
 	return new UserDaoimpl(sf);
 }
+
 @Autowired
 @Bean(name="SupplierDaoimpl")
 public SupplierDaoimpl SavesuppData(SessionFactory sf)
@@ -105,12 +103,14 @@ public OrdersDaoimpl SaveOrdersData(SessionFactory sf)
 {
 return new OrdersDaoimpl(sf);
 }
+
 @Autowired
 @Bean(name="ProductDaoimpl")
 public ProductDaoimpl SaveproductData(SessionFactory sf)
 {
 return new ProductDaoimpl(sf);
 }
+
 @Autowired
 @Bean(name="transaction manager")
 public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.Dao.CategoryDao;
 import com.model.Product;
+import com.model.categoryclass;
 	@Repository
 	@Service
 	public class CategoryDaoimpl implements CategoryDao
@@ -22,11 +23,11 @@ public CategoryDaoimpl(SessionFactory sessionFactory)
 {
 	this.sessionFactory=sessionFactory;
 }
-public void insertCategory(Category category)
+public void insertCategory(categoryclass cc)
 {
 	 Session session=sessionFactory.openSession();
      session.beginTransaction();
-	 session.saveOrUpdate(category);
+	 session.saveOrUpdate(cc);
 	 session.getTransaction().commit();
 
 }
@@ -34,17 +35,14 @@ public void insertCategory(Category category)
 
 public  List<Category> retrieve()
 {
-	
 	Session session=sessionFactory.openSession();
 	session.beginTransaction();
+	@SuppressWarnings("unchecked")
 	List <Category>li=session.createQuery("from Category").list();
-session.getTransaction().commit();
-return li;
+    session.getTransaction().commit();
+    return li;
 
-	
-	
-	
-}
+	}
 
 	public Category FindBycategoryId (int cid)
 	{
@@ -55,7 +53,7 @@ return li;
 		
 		session.beginTransaction();
 		c=session.get(Category.class, cid);
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "unused" })
 		List <Product>li=session.createQuery("from Category").list();
        session.getTransaction().commit();
        return c;

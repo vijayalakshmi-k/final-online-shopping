@@ -3,7 +3,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import com.Dao.UserDao;
 import com.model.User;
 public class UserDaoimpl implements UserDao

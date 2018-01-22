@@ -1,6 +1,5 @@
 package com.Daoimpl;
 import java.util.List;
-import java.util.Locale.Category;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -10,18 +9,18 @@ import org.springframework.stereotype.Repository;
 
 import com.Dao.CartDao;
 import com.model.Cart;
-import com.model.Product;
 
 @Repository("cartDaoimpl")
 public class CartDaoImpl implements CartDao {
 	
 	
-	@Autowired 
+	@Autowired
+	static 
 	SessionFactory sessionFactory;
 	
 	public CartDaoImpl(SessionFactory sessionFactory)
 	{
-this.sessionFactory=sessionFactory;
+CartDaoImpl.sessionFactory=sessionFactory;
 }
 	
 public void insertCart(Cart cart)
@@ -33,6 +32,7 @@ public void insertCart(Cart cart)
 	 session.getTransaction().commit();
 }
 
+@SuppressWarnings({ "unchecked", "deprecation" })
 public List<Cart> FindBycartId (String userid)
 {
 Session session=sessionFactory.openSession();
@@ -88,6 +88,12 @@ return cr;
 	    session.beginTransaction();
 		 session.update(cart);
 		 session.getTransaction().commit();
+	}
+
+	
+	public static void insercart(Cart cm) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void inserCart(Cart cart) {

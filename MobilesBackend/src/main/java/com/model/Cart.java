@@ -1,19 +1,20 @@
 package com.model;
-
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
 import org.springframework.stereotype.Component;
 @Component
 @Entity
 public class Cart implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private int cartid;
@@ -29,11 +30,11 @@ public class Cart implements Serializable {
 	public void setCartProductId(int cartProductId) {
 		CartProductId = cartProductId;
 	}
-	public int getCartprice() {
+	public double getCartprice() {
 		return cartprice;
 	}
-	public void setCartprice(int cartprice) {
-		this.cartprice = cartprice;
+	public void setCartprice(double price) {
+		this.cartprice = price;
 	}
 	public int getCartstock() {
 		return cartstock;
@@ -56,9 +57,13 @@ public class Cart implements Serializable {
 	private int CartProductId;
 @OneToOne(fetch=FetchType.LAZY)
 @JoinColumn(name="UserMailId")
-private int cartprice;
+private double cartprice;
 private int cartstock;
 private String cartimage;
 private String CartProductName;
+public void setCartUserDetails(User u) {
+	// TODO Auto-generated method stub
+	
+}
 
 }
