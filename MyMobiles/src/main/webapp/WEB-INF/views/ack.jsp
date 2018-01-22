@@ -14,7 +14,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/ack.jsp"></jsp:include>
 <h2>Thank you for shopping with us!!!!!!</h2>
 </body>
 </html>

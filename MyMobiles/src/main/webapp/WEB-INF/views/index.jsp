@@ -13,6 +13,8 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/index.jsp"></jsp:include>
+
 <h2>MyMobiles</h2>
 <div class="container">
 <div id= myCarousel class="carousel slide" data-ride="carousel">

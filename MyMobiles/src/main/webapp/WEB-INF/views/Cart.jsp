@@ -14,6 +14,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/Cart.jsp"></jsp:include>
+
 <div class="container">
 <h2>Here your Cart</h2>
 <table class="table table-hover" id="apl" class="display" border="2" width="80" align="center"></table>

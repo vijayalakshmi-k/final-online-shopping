@@ -14,6 +14,9 @@
 	rel="stylesheet">
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/views/productadminlist.jsp"></jsp:include>
+
 	<h2>ProductAdminList</h2>
   <table class="table table-hover" id="apl" class="display" border="2" width="80" align="center"></table>
 	<tr>

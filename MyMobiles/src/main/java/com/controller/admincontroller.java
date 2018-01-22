@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,19 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.Daoimpl.CategoryDaoImpl;
 import com.Daoimpl.CategoryDaoimpl;
-import com.Daoimpl.ProductDaoImpl;
 import com.Daoimpl.ProductDaoimpl;
-import com.Daoimpl.SupplierDaoImpl;
 import com.Daoimpl.SupplierDaoimpl;
-import com.Daoimpl.UserDaoImpl;
-import com.model.Category;
 import com.model.Product;
 import com.model.Supplier;
 import com.model.User;
+import com.model.categoryclass;
 
+@SuppressWarnings("unused")
 @Controller
 public class admincontroller 
 {
@@ -68,10 +63,10 @@ ModelAndView mv=new ModelAndView();
 	@Transactional
 	public ModelAndView saveCatData(@RequestParam("cid")int cid,@RequestParam("cname")String cname)
 	{
-ModelAndView mv=new ModelAndView();
-		Category cc=new Category();
+     ModelAndView mv=new ModelAndView();
+		categoryclass cc=new categoryclass();
 	    cc.setCid(cid);
-		cc.setCategoryName(cname);
+		cc.setCname(cname);
 		categoryDaoImpl.insertCategory(cc);
 		mv.setViewName("adding");
 		return mv;
@@ -89,9 +84,7 @@ ModelAndView mv=new ModelAndView();
 		prod.setStock(Integer.parseInt(request.getParameter("pStock")));
 		prod.setCategory(categoryDaoImpl.FindBycategoryId(Integer.parseInt(request.getParameter("pCategory"))));
 		prod.setSupplier(supplierDaoImpl.findBySuppId(Integer.parseInt(request.getParameter("pSupplier"))));
-				
-				
-		String filepath=request.getSession().getServletContext().getRealPath("/");
+	   String filepath=request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
 		prod.setImgname(filename);
 		productDaoImpl.insertProduct(prod);
@@ -111,9 +104,9 @@ ModelAndView mv=new ModelAndView();
 	@ModelAttribute
 	public void loadingDataImage(Model m)
 	{
-		m.addAttribute("satList",SupplierDaoimpl.retrieve());
-		m.addAttribute("catList",CategoryDaoimpl.retrieve());
-		m.addAttribute("prodList",ProductDaoimpl.retrieve());
+		m.addAttribute("satList",supplierDaoImpl.retrieve());
+		m.addAttribute("catList",categoryDaoImpl.retrieve());
+		m.addAttribute("prodList",productDaoImpl.retrieve());
 		
 	}
 	
@@ -180,8 +173,6 @@ ModelAndView mv=new ModelAndView();
 		String sat=request.getParameter("pSupplier");
 		prod.setCategory(categoryDaoImpl.FindBycategoryId(Integer.parseInt(cat)));
 	   prod.setSupplier(supplierDaoImpl.findBySuppId(Integer.parseInt(sat)));
-				
-				
 		String filepath=request.getSession().getServletContext().getRealPath("/");
 		String filename=file.getOriginalFilename();
 		prod.setImgname(filename);

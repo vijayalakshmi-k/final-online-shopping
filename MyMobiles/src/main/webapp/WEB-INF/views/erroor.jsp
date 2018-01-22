@@ -13,6 +13,8 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/erroor.jsp"></jsp:include>
+
 <h2>Authentication error!!!!!!!!!</h2>
 <div class="container">
 <h3>"GotoHome"

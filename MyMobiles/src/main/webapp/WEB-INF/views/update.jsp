@@ -14,6 +14,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<jsp:inssclude page="/WEB-INF/views/update.jsp"></jsp:include>
+
 <div class="container">
 <c:url value="productUpdate" var="pru"></c:url>
 <form method="post" action="productUpdate" enctype="multipart/form data">

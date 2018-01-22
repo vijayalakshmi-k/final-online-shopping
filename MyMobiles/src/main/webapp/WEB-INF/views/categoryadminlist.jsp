@@ -14,6 +14,7 @@
 	rel="stylesheet">
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/categoryadminlist.jsp"></jsp:include>
 	
 	
 	<h2>CategoryAdminList</h2>

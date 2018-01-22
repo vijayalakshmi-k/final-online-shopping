@@ -13,6 +13,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"rel="stylesheet">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/supplieradminlist.jsp"></jsp:include>
+
 	<h2>SupplierAdminList</h2>
 	<form action="supplierAdminList.jsp" method="post">
 			<table style width: "50%">

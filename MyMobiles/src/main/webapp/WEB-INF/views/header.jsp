@@ -13,6 +13,8 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+
 <nav id="navbar-blue" class="navbar navbar-inverse navbar-static-top" role="navigation">
 <div class="nav-navbar-nav">
 <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#mynavmenu" data-canvas="#navdemo">

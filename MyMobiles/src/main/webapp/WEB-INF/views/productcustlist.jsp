@@ -14,6 +14,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/productcustlist.jsp"></jsp:include>
+
 <div class="container">
 	<h2>ProductAdminList</h2>
 

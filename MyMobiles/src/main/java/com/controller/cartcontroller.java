@@ -1,38 +1,23 @@
 package com.controller;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.function.Supplier;
 
-import javax.persistence.criteria.Order;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.DaoImpl.CartDaoImpl;
-import com.DaoImpl.CategoryDaoImpl;
-import com.DaoImpl.OrdersDaoImpl;
-import com.DaoImpl.ProductDaoImpl;
-import com.DaoImpl.SupplierDaoImpl;
-import com.DaoImpl.UserDaoImpl;
+import com.Daoimpl.CartDaoImpl;
 import com.Daoimpl.CategoryDaoimpl;
 import com.Daoimpl.OrdersDaoimpl;
 import com.Daoimpl.ProductDaoimpl;
 import com.Daoimpl.SupplierDaoimpl;
 import com.Daoimpl.UserDaoimpl;
 import com.model.Cart;
-import com.model.Category;
 import com.model.Orders;
 import com.model.Product;
 import com.model.User;
@@ -76,21 +61,21 @@ public class cartcontroller {
 		try
 		{
 			int pid=Integer.parseInt(request.getParameter("pId"));
-			Double price=Double.parseDouble(request.getParameter("pPrice"));
+			double price=Double.parseDouble(request.getParameter("pPrice"));
 			int qty=Integer.parseInt(request.getParameter("pQty"));
 			String pname=request.getParameter("pname");
 			String imgName=request.getParameter("imgName");
 			Cart cartExist=cartDaoimpl.getCartById(pid, userEmail);
-		if(cartExist == null) {
+		    if(cartExist == null) {
 			Cart cm=new Cart();
-			cm.setCartprice(price);
-	cm.setCartid(pid);
-	cm.setCartstock(cartExist.getCartstock()+qty);
-	cm.setCartimage(imgName);
-	cm.setCartProductName(pname);
-	User u=userDaoimpl.FindByEmail(userEmail);
-	cm.setCartUserDetails(u);
-	cartDaoimpl.insertCart(cm);
+		      cm.setCartid(pid);
+		      cm.setCartprice(price);
+	      cm.setCartstock(cartExist.getCartstock()+qty);
+	       cm.setCartimage(imgName);
+	      cm.setCartProductName(pname);
+	     User u=userDaoimpl.FindByEmail(userEmail);
+	    cm.setCartUserDetails(u);
+	    CartDaoImpl.insercart(cm);
 		}	
 		else if(cartExist!=null)
 		{
@@ -104,13 +89,13 @@ public class cartcontroller {
 	cm.setCartUserDetails(u);
 	cartDaoimpl.insertCart(cm);
 		}
-			mv.addObject("cartInfo",cartDaoimpl.findByCartID(userEmail));
+			mv.addObject("cartInfo",cartDaoimpl.FindBycartId(userEmail));
 			mv.addObject("cart");
 			return mv;
 			}catch(Exception e)
 		{
 				e.printStackTrace();
-				mv.addObject("cartInfo",cartDaoimpl.findByCartID(userEmail));
+				mv.addObject("cartInfo",cartDaoimpl.FindBycartId(userEmail));
 				mv.addObject("cart");
 				return mv;
 				
@@ -125,7 +110,7 @@ public class cartcontroller {
 		Principal principal=request.getUserPrincipal();
 		String userEmail=principal.getName();
 		User u=userDaoimpl.FindByEmail(userEmail);
-		List<Cart> cart=cartDaoimpl.findByCartID(userEmail);
+		List<Cart> cart=cartDaoimpl.FindBycartId(userEmail);
 		mv.addObject("user",u);
 		mv.addObject("cart",cart);
 		return mv;
@@ -140,7 +125,7 @@ public class cartcontroller {
 		Orders ord=new Orders();
 		Principal principal=request.getUserPrincipal();
 		String userEmail=principal.getName();
-		List<Cart> cart=cartDaoimpl.findByCartID(userEmail);
+		List<Cart> cart=cartDaoimpl.FindBycartId(userEmail);
 		
 		Double total=Double.parseDouble(request.getParameter("total"));
 		String payment=request.getParameter("payment");
@@ -162,13 +147,13 @@ public class cartcontroller {
 	
 	
 	@RequestMapping(value="/deletePCart/{cartId }")
-	public ModelAndView deleteCartItem(@PathVariable("cartId")int cartId,HttpServletRequest request)
+	public ModelAndView deleteCartItem(@PathVariable("cartId")Cart cartId,HttpServletRequest request)
 	{
 		ModelAndView mv=new ModelAndView(); 
 		Principal principal=request.getUserPrincipal();
 		String userEmail=principal.getName();
 		cartDaoimpl.deleteCart(cartId);
-		mv.addObject("cartInfo", cartDaoimpl.findByCartID(userEmail));
+		mv.addObject("cartInfo", cartDaoimpl.FindBycartId(userEmail));
 	mv.setViewName("cart");
 	return mv;}
 	
@@ -180,7 +165,7 @@ public class cartcontroller {
 		ModelAndView mv=new ModelAndView(); 
 		Principal principal=request.getUserPrincipal();
 		String userEmail=principal.getName();
-		mv.addObject("cartInfo",cartDaoimpl.findByCartID(userEmail));
+		mv.addObject("cartInfo",cartDaoimpl.FindBycartId(userEmail));
 		mv.setViewName("cart");
 		return mv;
 		
